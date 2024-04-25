@@ -1,0 +1,60 @@
+﻿namespace Zadanie3_apbd;
+using System.Data.SqlClient;
+
+public class AnimalDataService : I_AnimalDataService
+{
+    private readonly string _connectionstring =
+        "Data source=db-mssql16.pjwstk.edu.pl;Initial Catalog=s25713;Integreted Security=true";
+
+    public List<Animal> GetAnimal(string orderBy)
+    {
+        string orderByTrue = "";
+        if (string.IsNullOrWhiteSpace(orderBy) || orderBy.Equals("IdAnimal"))
+        {
+            orderByTrue = "Name";
+        }
+        else
+        {
+            orderByTrue = orderBy;
+        }
+
+        var sql = "SELECT * FROM Animal ORDER BY " + orderByTrue;
+        var output = new List<Animal>();using (var connection = new SqlConnection(_connectionstring))
+        {
+            var command = new SqlCommand();
+            command.Connection = connection;
+            command.CommandText = sql;
+            connection.Open();
+            var dr = command.ExecuteReader();
+            while (dr.Read())
+            {
+                output.Add(new Animal
+                {
+                    IdAnimal = int.Parse(dr["IdAnimal"].ToString()),
+                    Name = dr["Name"].ToString(),
+                    Description = dr["Description"].ToString(),
+                    Category = dr["Category"].ToString(),
+                    Area = dr["Area"].ToString()
+                });
+            }
+            connection.Close();
+            return output;
+        }
+        
+    }
+
+    public void UpdateAnimal(string idAnimal, Animal animal)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddAnimal(Animal animal)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeleteAnimal(string idAnimal)
+    {
+        throw new NotImplementedException();
+    }
+}

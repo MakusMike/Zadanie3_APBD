@@ -2,17 +2,27 @@
 
 namespace Zadanie3_apbd;
 
-[Route("api/[controller]")]
 [ApiController]
-public class ControllerAnimals : ControllerBase
+[Route("api/animals")]
+public class ControllerAnimals : Controller
 {
-    private readonly string connectionstring;
-
-    public ControllerAnimals(string connectionstring)
+    private readonly string _connectionstring =
+        "Data source=db-mssql16.pjwstk.edu.pl;Initial Catalog=s25713;Integreted Security=true";
+    public ControllerAnimals(string _connectionstring)
     {
-        this.connectionstring = connectionstring;
+        
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAnimal([FromQuery] string orderBy)
+    {
+        
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateAnimal([FromBody] Animal animal)
+    {
+        
     }
     
-
-
 }
