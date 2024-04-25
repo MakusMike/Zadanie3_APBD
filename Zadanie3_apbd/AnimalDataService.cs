@@ -42,19 +42,59 @@ public class AnimalDataService : I_AnimalDataService
         }
         
     }
-
     public void UpdateAnimal(string idAnimal, Animal animal)
     {
-        throw new NotImplementedException();
-    }
+        using (var connection = new SqlConnection(_connectionstring))
+        {
+            SqlCommand con = new SqlCommand();
+            con.Connection = connection;
+    
+            con.CommandText = "UPDATE Animal SET " +
+                              "Name = @Name ," +
+                              "Description = @Description," +
+                              " Category = @Category," +
+                              " Area = @Area " +                   
+                              "WHERE idAnimal= @IdAnimal";
 
+            con.Parameters.AddWithValue("@IdAnimal", idAnimal);
+            con.Parameters.AddWithValue("@Name", animal.Name);
+            con.Parameters.AddWithValue("@Description", animal.Description);
+            con.Parameters.AddWithValue("@Category", animal.Category);
+            con.Parameters.AddWithValue("@Area", animal.Area);
+    
+            connection.Open();
+            con.ExecuteNonQuery();
+            connection.Close();
+        }
+    }
     public void AddAnimal(Animal animal)
     {
-        throw new NotImplementedException();
-    }
+        using (var connection = new SqlConnection(_connectionstring))
+        {
+            SqlCommand con = new SqlCommand();
+            con.Connection = connection;
+            con.CommandText = "INSERT INTO Animal VALUES" +
+                              "(@Name,@Description,@Category,@Area)";
+            con.Parameters.AddWithValue("@Name", animal.Name);
+            con.Parameters.AddWithValue("@Description", animal.Description);
+            con.Parameters.AddWithValue("@Category", animal.Category);
+            con.Parameters.AddWithValue("@Area", animal.Area);
 
+            connection.Open();
+            con.ExecuteNonQuery();
+            connection.Close();
+        }
+    }
     public void DeleteAnimal(string idAnimal)
     {
-        throw new NotImplementedException();
+        using (var connection = new SqlConnection(_connectionstring))
+        {
+            SqlCommand con = new SqlCommand();
+            con.Connection = connection;
+            con.CommandText = "DELETE FROM Animal WHERE IdAnimal = @idAnimal";
+            con.Parameters.AddWithValue("@idAnimal", idAnimal);
+            connection.Open();
+            con.ExecuteNonQuery();
+        }
     }
 }

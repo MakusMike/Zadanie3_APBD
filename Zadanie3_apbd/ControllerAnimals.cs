@@ -6,23 +6,37 @@ namespace Zadanie3_apbd;
 [Route("api/animals")]
 public class ControllerAnimals : Controller
 {
-    private readonly string _connectionstring =
-        "Data source=db-mssql16.pjwstk.edu.pl;Initial Catalog=s25713;Integreted Security=true";
-    public ControllerAnimals(string _connectionstring)
+    private readonly I_AnimalDataService _animalDataService;
+    public ControllerAnimals(I_AnimalDataService dataService)
     {
-        
+        _animalDataService = dataService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAnimal([FromQuery] string orderBy)
     {
-        
+        return Ok(_animalDataService.GetAnimal(orderBy)); 
     }
 
     [HttpPost]
-    public async Task<IActionResult> UpdateAnimal([FromBody] Animal animal)
+    public async Task<IAsyncResult> UpdateAnimal([FromBody] Animal animal)
     {
-        
+        _animalDataService.AddAnimal(animal);
+        return null;
+    }
+
+    [HttpPut("{idAnimal}")]
+    public async Task<IActionResult> PutAnimalById([FromRoute]string idAnimal, [FromBody]Animal animal)
+    {
+        _animalDataService.UpdateAnimal(idAnimal, animal);
+        return Ok();
+    }
+
+    [HttpDelete("{idAnimal}")]
+    public async Task<IActionResult> DeleteAnimal([FromRoute]string idAnimal)
+    {
+        _animalDataService.DeleteAnimal(idAnimal);
+        return Ok();
     }
     
 }
