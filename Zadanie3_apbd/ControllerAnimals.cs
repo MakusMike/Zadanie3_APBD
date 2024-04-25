@@ -1,6 +1,18 @@
-﻿namespace Zadanie3_apbd;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public class ControllerAnimals
+namespace Zadanie3_apbd;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ControllerAnimals : ControllerBase
 {
+    private readonly string connectionstring;
+
+    public ControllerAnimals(string connectionstring)
+    {
+        this.connectionstring = connectionstring;
+    }
     
+
+
 }
