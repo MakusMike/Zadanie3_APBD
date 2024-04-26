@@ -6,7 +6,7 @@ public class AnimalDataService : I_AnimalDataService
     private readonly string _connectionstring =
         "Data source=db-mssql16.pjwstk.edu.pl;Initial Catalog=s25713;Integreted Security=true";
 
-    public List<Animal> GetAnimal(string orderBy)
+    public List<Animal> GetAnimals(string orderBy)
     {
         string orderByTrue = "";
         if (string.IsNullOrWhiteSpace(orderBy) || orderBy.Equals("IdAnimal"))

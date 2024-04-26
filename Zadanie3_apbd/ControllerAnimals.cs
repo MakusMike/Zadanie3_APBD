@@ -13,9 +13,9 @@ public class ControllerAnimals : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAnimal([FromQuery] string orderBy)
+    public async Task<IActionResult> GetAnimals([FromQuery] string orderBy)
     {
-        return Ok(_animalDataService.GetAnimal(orderBy)); 
+        return Ok(_animalDataService.GetAnimals(orderBy)); 
     }
 
     [HttpPost]
